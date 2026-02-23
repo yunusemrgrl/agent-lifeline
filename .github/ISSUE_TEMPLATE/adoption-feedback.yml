@@ -1,0 +1,66 @@
+name: Adoption Feedback
+description: Share real usage feedback for agent-lifeline adoption tracking.
+title: "[feedback] "
+labels:
+  - feedback
+body:
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Which tool/session did you use?
+      options:
+        - Claude Code
+        - Cursor
+        - Codex
+        - Windsurf
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: scenario
+    attributes:
+      label: What context-loss scenario were you solving?
+      description: Example: /clear, compaction, or agent switch.
+      placeholder: Briefly describe what was lost and when.
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Which command(s) did you run?
+      placeholder: |
+        agent-lifeline save --focus "..."
+        agent-lifeline show
+        agent-lifeline export > HANDOFF.md
+    validations:
+      required: true
+
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Did it help you resume faster?
+      options:
+        - Yes
+        - Partially
+        - No
+    validations:
+      required: true
+
+  - type: dropdown
+    id: repeat
+    attributes:
+      label: Will you use it again?
+      options:
+        - Yes
+        - Maybe
+        - No
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Missing feature, bug, or UX friction.

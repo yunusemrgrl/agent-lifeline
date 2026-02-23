@@ -10,18 +10,18 @@
 
 ## Yapılacaklar
 
-- [ ] Başarı metriklerini netleştir
-- [ ] Ölçüm periyodu belirle (ör. 14 gün)
-- [ ] Dağıtım kanalları planı oluştur (X, Reddit, GitHub, dev toplulukları)
-- [ ] 3 kısa kullanım senaryosu üret (`save`, `show`, `export`)
-- [ ] Geri bildirim formu/issue şablonu aç
+- [x] Başarı metriklerini netleştir
+- [x] Ölçüm periyodu belirle (ör. 14 gün)
+- [x] Dağıtım kanalları planı oluştur (X, Reddit, GitHub, dev toplulukları)
+- [x] 3 kısa kullanım senaryosu üret (`save`, `show`, `export`)
+- [x] Geri bildirim formu/issue şablonu aç
 - [ ] İlk cohort verisini topla
 
 ## Önerilen Metrikler
 
 - [ ] npm weekly downloads
-- [ ] GitHub star / watch artışı
-- [ ] Issue/Discussion sayısı ve niteliği
+- [x] GitHub star / watch artışı
+- [x] Issue/Discussion sayısı ve niteliği
 - [ ] "First save" -> "second week return" oranı (manuel/anket temelli)
 - [ ] "Export kullanımı" oranı (kullanıcı geri bildirimi üzerinden)
 
@@ -33,4 +33,4 @@
 
 ## Çıktı
 
-- [ ] `docs/adoption-report.md` dosyasında kısa rapor (özet, metrikler, karar: devam/pivot)
+- [x] `docs/adoption-report.md` dosyasında kısa rapor (özet, metrikler, karar: devam/pivot)

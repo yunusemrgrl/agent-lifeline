@@ -65,17 +65,25 @@ jobs:
         if: steps.npm_check.outputs.published == 'false'
         run: npm test
 
+      - name: Validate npm token
+        id: token_check
+        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true'
+        continue-on-error: true
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+
       - name: Publish to npm
         id: publish
-        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true'
+        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true' && steps.token_check.outcome == 'success'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
 
-      - name: Skip npm publish (missing NPM_TOKEN)
-        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'false'
+      - name: Skip npm publish (missing or invalid NPM_TOKEN)
+        if: steps.npm_check.outputs.published == 'false' && (steps.token.outputs.has_token == 'false' || steps.token_check.outcome != 'success')
         run: |
-          echo "NPM_TOKEN is not configured. Skipping npm publish, tag, and release."
+          echo "NPM_TOKEN is missing or invalid. Skipping npm publish, tag, and release."
 
       - name: Create and push git tag
         if: steps.npm_check.outputs.published == 'true' || steps.publish.outcome == 'success'

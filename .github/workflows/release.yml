@@ -11,6 +11,8 @@ jobs:
   release:
     name: Tag + npm publish
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     permissions:
       contents: write
     steps:
@@ -42,6 +44,15 @@ jobs:
             echo "published=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Check npm token availability
+        id: token
+        run: |
+          if [ -n "${NPM_TOKEN:-}" ]; then
+            echo "has_token=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_token=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install
         if: steps.npm_check.outputs.published == 'false'
         run: npm ci
@@ -55,12 +66,19 @@ jobs:
         run: npm test
 
       - name: Publish to npm
-        if: steps.npm_check.outputs.published == 'false'
+        id: publish
+        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true'
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+
+      - name: Skip npm publish (missing NPM_TOKEN)
+        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'false'
+        run: |
+          echo "NPM_TOKEN is not configured. Skipping npm publish, tag, and release."
 
       - name: Create and push git tag
+        if: steps.npm_check.outputs.published == 'true' || steps.publish.outcome == 'success'
         run: |
           if git ls-remote --tags origin "${{ steps.version.outputs.version }}" | grep -q .; then
             echo "Tag ${{ steps.version.outputs.version }} already exists, skipping."
@@ -72,6 +90,7 @@ jobs:
           fi
 
       - name: Create GitHub Release
+        if: steps.npm_check.outputs.published == 'true' || steps.publish.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

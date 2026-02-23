@@ -76,6 +76,7 @@ jobs:
       - name: Publish to npm
         id: publish
         if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true' && steps.token_check.outcome == 'success'
+        continue-on-error: true
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
@@ -84,6 +85,11 @@ jobs:
         if: steps.npm_check.outputs.published == 'false' && (steps.token.outputs.has_token == 'false' || steps.token_check.outcome != 'success')
         run: |
           echo "NPM_TOKEN is missing or invalid. Skipping npm publish, tag, and release."
+
+      - name: Skip tag and release (publish failed)
+        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token == 'true' && steps.token_check.outcome == 'success' && steps.publish.outcome != 'success'
+        run: |
+          echo "npm publish failed. Skipping tag and GitHub release."
 
       - name: Create and push git tag
         if: steps.npm_check.outputs.published == 'true' || steps.publish.outcome == 'success'

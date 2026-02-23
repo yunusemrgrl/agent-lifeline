@@ -6,18 +6,18 @@
 
 ## Yapılacaklar
 
-- [ ] `git init` ile repo başlat
-- [ ] Varsayılan branch'i `main` yap
-- [ ] Uygun `.gitignore` kontrolü yap
-- [ ] İlk commit'i oluştur
-- [ ] GitHub remote (`origin`) ekle
-- [ ] `main` branch'i push et
+- [x] `git init` ile repo başlat
+- [x] Varsayılan branch'i `main` yap
+- [x] Uygun `.gitignore` kontrolü yap
+- [x] İlk commit'i oluştur
+- [x] GitHub remote (`origin`) ekle
+- [x] `main` branch'i push et
 
 ## Kabul Kriterleri
 
-- [ ] `git status` temiz veya beklenen değişikliklerle okunabilir
-- [ ] `git remote -v` çıktısında `origin` var
-- [ ] `git ls-remote --heads origin main` ile `main` görünüyor
+- [x] `git status` temiz veya beklenen değişikliklerle okunabilir
+- [x] `git remote -v` çıktısında `origin` var
+- [x] `git ls-remote --heads origin main` ile `main` görünüyor
 
 ## Komut Taslağı
 

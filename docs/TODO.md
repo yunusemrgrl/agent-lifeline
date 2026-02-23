@@ -4,7 +4,7 @@ Bu dosya, şu anki öncelikli 3 işi takip etmek için ana indeks.
 
 ## Açık TODO'lar
 
-- [ ] 1) Repo bootstrap + ilk push
+- [x] 1) Repo bootstrap + ilk push
   - Dosya: `docs/todos/01-repo-bootstrap-and-push.md`
 - [ ] 2) CI/CD aktivasyonu ve doğrulama
   - Dosya: `docs/todos/02-activate-ci-cd.md`

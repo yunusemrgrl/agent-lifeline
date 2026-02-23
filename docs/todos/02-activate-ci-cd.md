@@ -12,19 +12,29 @@ GitHub Actions iş akışlarının gerçekten tetiklendiğini ve başarılı ge�
 
 ## Yapılacaklar
 
-- [ ] `main` branch'e test amaçlı küçük bir commit push et
-- [ ] CI workflow'un tetiklendiğini doğrula
-- [ ] CI adımlarının geçtiğini doğrula (`lint`, `test`, `pack:check`)
-- [ ] Landing workflow'u `landing/**` değişikliği ile tetikle
-- [ ] Release workflow için gerekli secret'ları kontrol et (`NPM_TOKEN`)
-- [ ] `workflow_dispatch` ile manuel tetik testini yap
+- [x] `main` branch'e test amaçlı küçük bir commit push et
+- [x] CI workflow'un tetiklendiğini doğrula
+- [x] CI adımlarının geçtiğini doğrula (`lint`, `test`, `pack:check`)
+- [x] Landing workflow'u tetikle ve deploy al
+- [ ] Release workflow için publish yetkili npm token doğrulamasını tamamla (`NPM_TOKEN`)
+- [x] `workflow_dispatch` ile manuel tetik testini yap
 
 ## Kabul Kriterleri
 
-- [ ] Actions sekmesinde 3 workflow da en az bir kez tetiklenmiş
-- [ ] CI workflow son durumu `success`
-- [ ] Landing deploy URL'i üretmiş
-- [ ] Release workflow en azından publish öncesi adımları hatasız çalıştırmış
+- [x] Actions sekmesinde 3 workflow da en az bir kez tetiklenmiş
+- [x] CI workflow son durumu `success`
+- [x] Landing deploy URL'i üretmiş
+- [x] Release workflow publish öncesi adımları hatasız çalışmış
+
+## Durum
+
+- Landing Pages artık aktif: `https://yunusemrgrl.github.io/agent-lifeline/`
+- Release job hala `Publish to npm` adımında fail.
+- Akış artık açık mesajla token gerektiriyor; tek kalan iş geçerli publish token.
+
+## Kalan Net Aksiyon
+
+- Repository secret `NPM_TOKEN` değerini npm **Automation Token (publish yetkili)** ile güncelle.
 
 ## Notlar
 

@@ -1,0 +1,85 @@
+name: Release on Version Bump
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Tag + npm publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Read version from package.json
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "plain=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check if already published to npm
+        id: npm_check
+        run: |
+          if npm view "agent-lifeline@${{ steps.version.outputs.plain }}" version 2>/dev/null | grep -q "${{ steps.version.outputs.plain }}"; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install
+        if: steps.npm_check.outputs.published == 'false'
+        run: npm ci
+
+      - name: Lint
+        if: steps.npm_check.outputs.published == 'false'
+        run: npm run lint
+
+      - name: Test
+        if: steps.npm_check.outputs.published == 'false'
+        run: npm test
+
+      - name: Publish to npm
+        if: steps.npm_check.outputs.published == 'false'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create and push git tag
+        run: |
+          if git ls-remote --tags origin "${{ steps.version.outputs.version }}" | grep -q .; then
+            echo "Tag ${{ steps.version.outputs.version }} already exists, skipping."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag "${{ steps.version.outputs.version }}"
+            git push origin "${{ steps.version.outputs.version }}"
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "${{ steps.version.outputs.version }}" &>/dev/null; then
+            echo "Release ${{ steps.version.outputs.version }} already exists, skipping."
+          else
+            gh release create "${{ steps.version.outputs.version }}" \
+              --title "${{ steps.version.outputs.version }}" \
+              --generate-notes \
+              --latest
+          fi

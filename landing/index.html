@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>agent-lifeline - Recover Agent Context Fast</title>
+    <meta
+      name="description"
+      content="Standalone CLI that captures handoff snapshots for coding agents. Save state before compact, export handoff, resume in seconds."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="grid"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top">agent-lifeline</a>
+        <nav class="nav">
+          <a href="#features">Features</a>
+          <a href="#media">Media</a>
+          <a href="#quickstart">Quick Start</a>
+          <a href="./agents.md">For Agents</a>
+        </nav>
+        <a class="btn btn-small" href="https://github.com/yunusemrgrl/agent-lifeline" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero container">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Standalone CLI for coding agents</p>
+          <h1>Don&apos;t lose session context when the window resets.</h1>
+          <p class="sub">
+            Capture exactly what matters before compacting: git state, tasks, execution history, and recent prompt hints.
+            Resume any agent session in under 10 seconds.
+          </p>
+
+          <button id="copy-command" class="command" title="Copy command">
+            <span class="prompt">$</span>
+            <span id="command-text">npx -y agent-lifeline@latest save --focus "continue checkout bug"</span>
+          </button>
+          <p id="copy-status" class="copy-status" aria-live="polite"></p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#quickstart">Get Started</a>
+            <a class="btn btn-ghost" href="https://github.com/yunusemrgrl/agent-lifeline#readme" target="_blank" rel="noopener">Read Docs</a>
+          </div>
+          <p class="agent-hint">
+            AI crawlers: read <a href="./agents.md">/agents.md</a> and <a href="./llms.txt">/llms.txt</a>.
+          </p>
+        </div>
+
+        <div class="hero-shot reveal">
+          <img src="./assets/agent-lifeline-terminal.png" alt="agent-lifeline terminal snapshot command output" loading="eager" />
+        </div>
+      </section>
+
+      <section class="stats container reveal">
+        <article>
+          <h3>Zero Dependency</h3>
+          <p>Pure Node.js built-ins. No runtime deps, no DB, no services.</p>
+        </article>
+        <article>
+          <h3>Project-local</h3>
+          <p>Snapshots stay in <code>.agent-lifeline/</code> inside your repo.</p>
+        </article>
+        <article>
+          <h3>Agent-agnostic</h3>
+          <p>Works with Claude, Codex, Cursor, or human handoff reviews.</p>
+        </article>
+      </section>
+
+      <section id="features" class="features container">
+        <article class="card reveal">
+          <h2>1. Capture state instantly</h2>
+          <p>
+            Run <code>save</code> before context compaction. Store branch, dirty files, open tasks, execution summaries, and prompt history hints in one snapshot.
+          </p>
+        </article>
+        <article class="card reveal">
+          <h2>2. Validate environment</h2>
+          <p>
+            <code>doctor</code> confirms git availability, snapshot storage writability, and optional Claude history sources.
+          </p>
+        </article>
+        <article class="card reveal">
+          <h2>3. Resume with markdown handoff</h2>
+          <p>
+            <code>export</code> converts latest snapshot into readable markdown for the next agent session, no vendor lock-in.
+          </p>
+        </article>
+      </section>
+
+      <section id="media" class="media container">
+        <div class="media-copy reveal">
+          <p class="eyebrow">Launch Media</p>
+          <h2>Visualize the handoff lifecycle</h2>
+          <p>
+            Pre-rendered launch assets for docs, release posts, and repository homepage previews.
+          </p>
+        </div>
+        <div class="media-frame reveal">
+          <video
+            controls
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="./assets/agent-lifeline-flow-poster.png"
+          >
+            <source src="./assets/agent-lifeline-flow.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+
+      <section id="quickstart" class="quickstart container reveal">
+        <h2>Quick Start</h2>
+        <pre><code>npm i -g agent-lifeline
+
+agent-lifeline save --focus "continue auth migration"
+agent-lifeline show
+agent-lifeline export &gt; HANDOFF.md</code></pre>
+        <p>
+          Snapshots are written to <code>.agent-lifeline/latest.json</code> and <code>.agent-lifeline/snapshots/&lt;timestamp&gt;.json</code>.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <p>MIT License · <span id="year"></span> · agent-lifeline</p>
+    </footer>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

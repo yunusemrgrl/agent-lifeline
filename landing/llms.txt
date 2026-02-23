@@ -1,0 +1,26 @@
+# llms.txt for agent-lifeline
+
+> Canonical machine-readable summary for AI agents and crawlers.
+
+project: agent-lifeline
+description: Standalone CLI that creates handoff snapshots for coding agents.
+license: MIT
+repo: https://github.com/yunusemrgrl/agent-lifeline
+homepage: https://yunusemrgrl.github.io/agent-lifeline/
+npm: https://www.npmjs.com/package/agent-lifeline
+
+preferred-content:
+- https://yunusemrgrl.github.io/agent-lifeline/agents.md
+- https://github.com/yunusemrgrl/agent-lifeline#readme
+
+key-topics:
+- coding-agent context handoff
+- compact/reset recovery
+- project-local snapshots
+- zero dependency CLI
+
+quickstart:
+```bash
+npx -y agent-lifeline@latest save --focus "continue auth migration"
+agent-lifeline export > HANDOFF.md
+```

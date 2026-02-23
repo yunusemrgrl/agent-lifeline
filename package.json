@@ -1,0 +1,51 @@
+{
+  "name": "agent-lifeline",
+  "version": "0.2.0",
+  "description": "Standalone zero-dependency handoff snapshots for coding agents",
+  "type": "module",
+  "bin": {
+    "agent-lifeline": "bin/agent-lifeline.js"
+  },
+  "scripts": {
+    "start": "node ./bin/agent-lifeline.js",
+    "save": "node bin/agent-lifeline.js save",
+    "show": "node bin/agent-lifeline.js show",
+    "export": "node bin/agent-lifeline.js export",
+    "doctor": "node bin/agent-lifeline.js doctor",
+    "lint": "node --check ./bin/agent-lifeline.js",
+    "test": "node ./scripts/smoke-test.mjs",
+    "pack:check": "npm pack --dry-run",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "files": [
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai-agent",
+    "claude",
+    "codex",
+    "handoff",
+    "context",
+    "cli",
+    "resume",
+    "snapshot"
+  ],
+  "author": "Yunus Emre Gurlu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yunusemrgrl/agent-lifeline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yunusemrgrl/agent-lifeline/issues"
+  },
+  "homepage": "https://github.com/yunusemrgrl/agent-lifeline#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

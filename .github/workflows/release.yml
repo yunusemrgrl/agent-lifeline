@@ -44,21 +44,6 @@ jobs:
             echo "published=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Check npm token availability
-        id: token
-        run: |
-          if [ -n "${NPM_TOKEN:-}" ]; then
-            echo "has_token=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_token=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Fail if NPM_TOKEN is missing
-        if: steps.npm_check.outputs.published == 'false' && steps.token.outputs.has_token != 'true'
-        run: |
-          echo "::error::NPM_TOKEN secret is missing. Add it in repository Settings > Secrets and variables > Actions."
-          exit 1
-
       - name: Install
         if: steps.npm_check.outputs.published == 'false'
         run: npm ci
@@ -70,13 +55,6 @@ jobs:
       - name: Test
         if: steps.npm_check.outputs.published == 'false'
         run: npm test
-
-      - name: Validate npm token
-        id: token_check
-        if: steps.npm_check.outputs.published == 'false'
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
 
       - name: Publish to npm
         id: publish
